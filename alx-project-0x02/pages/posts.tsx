@@ -1,30 +1,14 @@
 // pages/posts.tsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostCard from "@/components/common/PostCard";
 import { PostProps } from "@/interfaces";
 import Header from "@/components/layout/Header";
 
-const PostsPage: React.FC = () => {
-  const [posts, setPosts] = useState<PostProps[]>([]);
+interface PostsPageProps {
+  posts: PostProps[];
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-      const data = await response.json();
-
-      // Map API fields to match PostProps
-      const formattedPosts = data.slice(0, 10).map((post: any) => ({
-        title: post.title,
-        content: post.body,
-        userId: post.userId,
-      }));
-
-      setPosts(formattedPosts);
-    };
-
-    fetchPosts();
-  }, []);
-
+const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
   return (
     <div>
       <Header />
@@ -43,4 +27,23 @@ const PostsPage: React.FC = () => {
   );
 };
 
+// ✅ Next.js data fetching
+export async function getStaticProps() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await response.json();
+
+  const posts: PostProps[] = data.slice(0, 10).map((post: any) => ({
+    title: post.title,
+    content: post.body,
+    userId: post.userId,
+  }));
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
 export default PostsPage;
+
