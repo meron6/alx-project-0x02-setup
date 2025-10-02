@@ -1,28 +1,31 @@
-import { ButtonProps } from "@/interface";
+import { type ButtonProps } from "@/interfaces";
 
-const Button = ({
-  buttonLabel,
-  buttonSize,
-  buttonBackgroundColor,
-  action,
-}: ButtonProps) => {
-  const backgroundColorClass = buttonBackgroundColor
-    ? {
-        red: "bg-red-500",
-        blue: "bg-blue-500",
-        orange: "bg-orange-500",
-        green: "bg-green-500",
-      }[buttonBackgroundColor]
-    : "bg-slate-500";
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  size = "medium",
+  shape = "rounded-md",
+}) => {
+  const sizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
+    small: "px-2 py-1 text-sm",
+    medium: "px-4 py-2 text-base",
+    large: "px-6 py-3 text-lg",
+  };
+
+  const shapeClasses: Record<NonNullable<ButtonProps["shape"]>, string> = {
+    "rounded-sm": "rounded-sm",
+    "rounded-md": "rounded-md",
+    "rounded-full": "rounded-full",
+  };
 
   return (
     <button
-      onClick={action}
-      className={`${backgroundColorClass} ${buttonSize} px-6 py-2 text-sm font-semibold rounded-lg hover:${backgroundColorClass}/50 transition duration-300 text-white`}
+      onClick={onClick}
+      className={`bg-blue-600 text-white ${sizeClasses[size]} ${shapeClasses[shape]} hover:bg-blue-700 transition`}
     >
-      {buttonLabel}
+      {label}
     </button>
   );
 };
 
-export default Button; 
+export default Button;
