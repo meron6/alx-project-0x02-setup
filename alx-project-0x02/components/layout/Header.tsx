@@ -1,19 +1,20 @@
 import Link from "next/link";
 
-const Header = () => {
+export default function Header() {
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
-      <h1 className="text-2xl font-bold">SoloForge Project</h1>
-      <nav className="space-x-4">
-        <Link href="/home" className="hover:underline">
+    <header className="bg-gray-800 text-white py-4 px-6 flex justify-between items-center">
+      <h1 className="text-xl font-bold">SoloForge</h1>
+      <nav className="space-x-6">
+        <Link href="/home" className="hover:text-blue-400">
           Home
         </Link>
-        <Link href="/about" className="hover:underline">
+        <Link href="/about" className="hover:text-blue-400">
           About
+        </Link>
+        <Link href="/posts" className="hover:text-blue-400">
+          Posts
         </Link>
       </nav>
     </header>
   );
-};
-
-export default Header;
+}
